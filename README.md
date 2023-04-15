@@ -12,8 +12,6 @@
 * [X] Add a Back button to Go back to the home page from the Trending Subject page-Added back button in Trending Subject Page.
 * [X] Implement caching for the API responses - Implemented caching for the API responses - home.components.ts - Line 58 to 61
 
-__Note__ - This challenge is in angular. We work on angular frameworks & after you join we expect the same from you. Hence it is required to complete this assignement in angular itself.
-
 ## Who is this for?
 
 This challenge is meant for candidates who wish to intern at Fyle and work with our engineering team. The candidate should be able to commit to at least 6 months of dedicated time for internship.
