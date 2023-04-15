@@ -10,7 +10,7 @@ import { Book } from 'src/app/core/models/book-response.model';
 })
 export class TrendingSubjectsComponent implements OnInit {
 
-  isLoading: boolean = true;
+  loading: boolean = true;
 
   subjectName: string = '';
 
@@ -24,15 +24,14 @@ export class TrendingSubjectsComponent implements OnInit {
   getAllBooks() {
     this.subjectsService.getAllBooks(this.subjectName).subscribe((data) => {
       this.allBooks = data?.works;
-      // this.subjectsArray = data;
-      this.isLoading = false;
+      this.loading = false;
     });
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.subjectName = params.get('name') || '';
-      this.isLoading = true;
+      this.loading = true;
       this.getAllBooks();
     });
   }

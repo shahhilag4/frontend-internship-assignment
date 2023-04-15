@@ -19,7 +19,7 @@
   tw-flex
   tw-justify-center
   tw-h-60-px
-  tw-w-200-px
+  tw-w-1/4
 }
 
 .trending-subjects {
@@ -28,4 +28,57 @@
   tw-p-12-px
   tw-rounded-4-px
   tw-shadow-lg
+}
+
+.table-view {
+  @apply
+  tw-w-2/3
+  tw-overflow-hidden
+  tw-border-collapse
+  tw-p-12-px
+  tw-table-auto
+}
+
+table {
+  @apply
+  tw-border
+  tw-border-collapse
+  tw-w-full
+}
+
+th, td {
+  padding:4px;
+}
+
+thead {
+  @apply
+  tw-bg-table-header-bg
+}
+
+tr:nth-child(even) {
+  @apply
+  tw-h-60-px
+  tw-border
+  tw-border-solid
+  tw-pl-12-px;
+
+
+}
+
+tr:nth-child(odd) {
+  @apply
+  tw-h-60-px
+  tw-border
+  tw-border-solid
+  tw-pl-12-px;
+
+}
+
+tr:hover {
+  @apply
+  tw-bg-blue-100
+}
+
+#noResults {
+  padding: 4px;
 }

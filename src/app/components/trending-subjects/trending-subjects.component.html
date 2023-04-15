@@ -1,6 +1,11 @@
-<div *ngIf="allBooks.length > 0">
-  <front-end-internship-assignment-table-view
-  [booksList]="allBooks"
-  [subjectName]="subjectName"
-  ></front-end-internship-assignment-table-view>
+<div *ngIf="loading; else bookList">
+  Loading....
 </div>
+<ng-template #bookList>
+  <div *ngIf="allBooks.length > 0">
+    <front-end-internship-assignment-table-view
+      [booksList]="allBooks"
+      [subjectName]="subjectName"
+    ></front-end-internship-assignment-table-view>
+  </div>
+</ng-template>
