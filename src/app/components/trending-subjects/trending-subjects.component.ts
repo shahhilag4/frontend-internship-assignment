@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router  } from '@angular/router';
 import { SubjectsService } from '../../core/services/subjects.service';
 import { Book } from 'src/app/core/models/book-response.model';
 
@@ -18,7 +18,8 @@ export class TrendingSubjectsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private subjectsService: SubjectsService
+    private subjectsService: SubjectsService,
+    private router: Router
   ) {}
 
   getAllBooks() {
@@ -34,6 +35,10 @@ export class TrendingSubjectsComponent implements OnInit {
       this.loading = true;
       this.getAllBooks();
     });
+
+  }
+  goBack(): void {
+    this.router.navigate(['/']);
   }
 
 }

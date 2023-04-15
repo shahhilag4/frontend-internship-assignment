@@ -1,11 +1,14 @@
-<div *ngIf="loading; else bookList">
-  Loading....
+<div *ngIf="loading; else bookList" class="loading">
+ <p class="load-text">Loading....</p> 
 </div>
 <ng-template #bookList>
   <div *ngIf="allBooks.length > 0">
     <front-end-internship-assignment-table-view
-      [booksList]="allBooks"
-      [subjectName]="subjectName"
+    [booksList]="allBooks"
+    [subjectName]="subjectName"
     ></front-end-internship-assignment-table-view>
   </div>
 </ng-template>
+<div class="center">
+  <button (click)="goBack()" class="back">Back</button>
+</div>

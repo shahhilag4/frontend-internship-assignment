@@ -9,6 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [AppComponent, TrendingSubjectsComponent, HomeComponent],
@@ -19,7 +23,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     HttpClientModule,
     SharedModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
