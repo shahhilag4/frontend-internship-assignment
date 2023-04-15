@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BookService {
   //Setting a base URL to search and get data
-  private baseUrl = 'http://openlibrary.org';
+  private baseUrl = 'https://openlibrary.org';
 
   constructor(private http: HttpClient) { }
 
