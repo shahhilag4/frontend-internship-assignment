@@ -11,6 +11,9 @@
 * [X] Add Loaders on the page while fetching data for both the Trending Subjects redirected table view and the new Search result view - Added both while fetching data and in Trending Subjects.You will notice a "Loading...." text.
 * [X] Add a Back button to Go back to the home page from the Trending Subject page-Added back button in Trending Subject Page.
 * [X] Implement caching for the API responses - Implemented caching for the API responses - home.components.ts - Line 58 to 61
+* [X] Deployed application
+
+__Note__ - Please wait for some time for search results to be available
 
 ## Who is this for?
 
