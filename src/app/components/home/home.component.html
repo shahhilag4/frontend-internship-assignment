@@ -1,5 +1,8 @@
+<!-- Header -->
 <div class="header">
+  <!-- Main Heading -->
   <div class="tw-text-24-px tw-font-600">Open Books Library</div>
+  <!-- Searchbar - Implements an onSearch() function on clicking or pressing enter.This function will healp you search your contents-->
   <div class="search-button">
     <mat-icon class="tw-mt-16-px" aria-label="Search Icon" (click)="onSearch()">search</mat-icon>
     <input
@@ -12,12 +15,13 @@
       class="tw-border-0 tw-bg-inherit"
       (keyup.enter)="onSearch()"
     >
+    <!-- Clear Search Button -->
     <button mat-icon-button (click)="clearSearch()" class="cross">
       <mat-icon>clear</mat-icon>
     </button>
   </div>
 </div>
-
+<!-- Fetching data into table -->
 <div class="tw-flex tw-flex-row tw-m-24-px">
   <section class="trending-subjects">
     <div class="tw-font-600 tw-text-24-px">Trending Subjects</div>
@@ -46,6 +50,7 @@
           <td class="tw-p-4-px">{{ book.year }}</td>
         </tr>
       </tbody>
+      <!-- Loading or No results found alternatives -->
       <ng-template #loadingOrNoResults>
         <tr>
           <td colspan="3" class="tw-p-4-px">
@@ -55,6 +60,7 @@
         </tr>
       </ng-template>
     </table>
+    <!-- Pagination -->
     <mat-paginator [length]="pageCount()" [pageSize]="pageSize" [pageIndex]="currentPage - 1" [pageSizeOptions]=[10] (page)="onPageChange($event)"></mat-paginator>
   </div>
 </div>

@@ -13,15 +13,17 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  // Variable declaration
   bookSearch: FormControl;
   books: Array<any> = [];
-  showNoResultsMessage: boolean = false;
-  loading: boolean = false;
-  pageIndex: number = 1;
-  totalResults: number = 0;
-  
-  currentPage:number=1;
-  pageSize: number =10;
+  showNoResultsMessage = false;
+  loading = false;
+  pageIndex = 1;
+  totalResults = 0;
+
+  //Pagination variables
+  currentPage=1;
+  pageSize =10;
   cachedBooks: { [key: string]: Array<any> } = {};
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -37,6 +39,7 @@ export class HomeComponent implements OnInit {
     { name: 'Crypto' },
   ];
 
+  //Load functionalities on starting of the application
   ngOnInit(): void {
     this.bookSearch.valueChanges.pipe(
       debounceTime(300),
@@ -50,6 +53,8 @@ export class HomeComponent implements OnInit {
         return;
       }
       this.loading = true; // set loading to true
+      
+      //Caching
       const cacheKey = searchKey.trim().toLowerCase(); // normalize cache key
       if (this.cachedBooks[cacheKey]) { // check if data is already cached
         this.loading = false; // set loading to false
@@ -63,6 +68,7 @@ export class HomeComponent implements OnInit {
         }
         return;
       }
+      //Fetching data from API
       this.bookService.searchBooks(searchKey, this.currentPage, this.pageSize)
         .subscribe((data: any) => {
           this.loading = false; // set loading to false
@@ -75,8 +81,7 @@ export class HomeComponent implements OnInit {
               bookUrl: `https://openlibrary.org/books/${book.cover_edition_key ? book.cover_edition_key : book.key}`
             };
           });
-          this.onSearch(); // call pageCount to update paginator length
-          // show "No results found" if search results are empty
+          this.onSearch(); // call search functionality to get accurate page count
           if (this.books.length === 0) {
             this.showNoResultsMessage = true;
           } else {
@@ -103,13 +108,14 @@ export class HomeComponent implements OnInit {
     });
     
   }
-  
+  //reset paginator data on new query detection
   resetPaginator(): void {
     if (this.paginator) {
       this.paginator.firstPage();
       this.paginator.length = this.books.length;
     }
   }
+  //Basic search functionality
   onSearch(): void {
     const query: string = this.bookSearch.value;
     if (query.trim().length < 3) {
@@ -141,13 +147,13 @@ export class HomeComponent implements OnInit {
         this.paginator.firstPage(); // reset paginator to first page
       });
   }
-  
+  //Count the number of pages based on a formula
   pageCount(): number {
     const count = Math.ceil(this.totalResults / this.pageSize); // calculate number of pages
     return count;
   }
   
-  
+  //On clicking next or previous this function will be called
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex + 1; // update pageIndex property
     this.pageSize = event.pageSize; // update pageSize property
@@ -174,18 +180,13 @@ export class HomeComponent implements OnInit {
   }
   
   
-  
+  //clear all books when the query is cleared  
   clearTable(): void {
     this.books = [];
     this.showNoResultsMessage = false;
   }
+  //clear searches on clicking button
   clearSearch(): void {
     this.bookSearch.setValue('');
-  }
-
-  // getPageCount(): number {
-  //   console.log(Math.ceil(this.totalResults / this.pageSize))
-  //   return Math.ceil(this.totalResults / this.pageSize);
-  // }
-    
+  } 
 }
