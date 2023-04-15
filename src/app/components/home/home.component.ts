@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit {
       this.paginator.length = this.books.length;
     }
   }
-  //Basic search functionality
+  //Search functionality
   onSearch(): void {
     const query: string = this.bookSearch.value;
     if (query.trim().length < 3) {

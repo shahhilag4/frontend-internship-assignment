@@ -1,4 +1,18 @@
-# Fyle Frontend Challenge
+# Fyle Frontend Challenge-Hilag Shah
+
+## Challange solutions:-
+
+* [X] Implement Search by book title or author name - Implementation in src/app/components/home/home.component.ts (Line 118-149)
+* [X] Paginated results - Implementation using material UI pagination set with a limit of 10 search results per page - Implementation in various places in home.component.ts and line 64 in home.component.html
+* [X] Added limit and offset to improve search performance - Implementation in book.service.ts while making API calls
+* [X] Clear search text - Implementation in home.component.ts on line 189 to 191
+* [X] Table should have due_date(Optional Field with create and update,date should not be greater than the current timestamp)
+* [X] Handle edge cases related to api calls (like when the link is undefined then there is no use to redirect user to the link) - Implementation in home.component.html from line 45-48 and also solved some edge cases like error handling in the home.component.ts file
+* [X] Add Loaders on the page while fetching data for both the Trending Subjects redirected table view and the new Search result view - Added both while fetching data and in Trending Subjects.You will notice a "Loading...." text.
+* [X] Add a Back button to Go back to the home page from the Trending Subject page-Added back button in Trending Subject Page.
+* [X] Implement caching for the API responses - Implemented caching for the API responses - home.components.ts - Line 58 to 61
+
+__Note__ - This challenge is in angular. We work on angular frameworks & after you join we expect the same from you. Hence it is required to complete this assignement in angular itself.
 
 ## Who is this for?
 
