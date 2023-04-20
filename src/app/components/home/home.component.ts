@@ -5,13 +5,6 @@ import { BookService } from '../../core/services/book.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { PageEvent } from '@angular/material/paginator';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatIconModule } from '@angular/material/icon';
-
-// @NgModule
-// ({
-//   imports: [MatIconModule,MatPaginatorModule],
-// })
 
 
 @Component({
@@ -197,4 +190,3 @@ export class HomeComponent implements OnInit {
     this.bookSearch.setValue('');
   } 
 }
-

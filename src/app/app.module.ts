@@ -7,7 +7,7 @@ import { TrendingSubjectsComponent } from '../app/components/trending-subjects/t
 import { HomeComponent } from '../app/components/home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,7 +29,8 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserAnimationsModule,
     NoopAnimationsModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    FormsModule,
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent],
