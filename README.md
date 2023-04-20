@@ -12,6 +12,8 @@
 * [X] Add a Back button to Go back to the home page from the Trending Subject page-Added back button in Trending Subject Page.
 * [X] Implement caching for the API responses - Implemented caching for the API responses - home.components.ts - Line 58 to 61
 * [X] Deployed application
+* [X] All tests passed
+* [X] All console errors suppressed
 
 __Note__ - Please wait for some time for search results to be available
 
