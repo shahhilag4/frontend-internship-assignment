@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter, switchMap } from 'rxjs/operators';
 import { BookService } from '../../core/services/book.service';
@@ -19,13 +19,14 @@ export class HomeComponent implements OnInit {
   pageIndex = 1;
   totalResults = 0;
   //Pagination variables
-  currentPage = 1;
-  pageSize = 10;
+  currentPage=1;
+  pageSize =10;
   cachedBooks: { [key: string]: Array<any> } = {};
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  constructor(private bookService: BookService, private http: HttpClient) {
+  constructor(private bookService: BookService,private http: HttpClient) {
     this.bookSearch = new FormControl('');
   }
+
 
   trendingSubjects: Array<any> = [
     { name: 'JavaScript' },
@@ -35,13 +36,14 @@ export class HomeComponent implements OnInit {
     { name: 'Crypto' },
   ];
 
+
   //Load functionalities on starting of the application -----> Debouncing functionality leveraged
   ngOnInit() {
     this.bookSearch.valueChanges
       .pipe(
         debounceTime(300) // wait for 500ms before emitting the next value
       )
-      .subscribe((query) => {
+      .subscribe(query => {
         this.onSearch();
       });
   }
@@ -60,8 +62,7 @@ export class HomeComponent implements OnInit {
       return;
     }
     this.loading = true; // set loading to true
-    this.bookService
-      .searchBooks(query, this.pageIndex, this.pageSize)
+    this.bookService.searchBooks(query, this.pageIndex, this.pageSize)
       .subscribe((response: any) => {
         this.loading = false; // set loading to false
         this.books = response.docs.map((book: any) => {
@@ -70,9 +71,7 @@ export class HomeComponent implements OnInit {
             authorName: book.author_name ? book.author_name.join(', ') : '',
             year: book.first_publish_year || '',
             isbn: book.isbn ? book.isbn[0] : '',
-            bookUrl: `https://openlibrary.org/books/${
-              book.cover_edition_key ? book.cover_edition_key : book.key
-            }`,
+            bookUrl: `https://openlibrary.org/books/${book.cover_edition_key ? book.cover_edition_key : book.key}`
           };
         });
         // show "No results found" if search results are empty
@@ -88,18 +87,13 @@ export class HomeComponent implements OnInit {
       });
   }
   //Count the number of pages based on a formula
-  pageCount(): number {
-    const count = Math.ceil(this.totalResults / this.pageSize); // calculate number of pages
-    return count;
-  }
-
+  
   //On clicking next or previous this function will be called
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex + 1; // update pageIndex property
     this.pageSize = event.pageSize; // update pageSize property
     const query: string = this.bookSearch.value;
-    this.bookService
-      .searchBooks(query, this.pageIndex, this.pageSize)
+    this.bookService.searchBooks(query, this.pageIndex, this.pageSize)
       .subscribe((response: any) => {
         this.loading = false;
         this.books = response.docs.map((book: any) => {
@@ -108,9 +102,7 @@ export class HomeComponent implements OnInit {
             authorName: book.author_name ? book.author_name.join(', ') : '',
             year: book.first_publish_year || '',
             isbn: book.isbn ? book.isbn[0] : '',
-            bookUrl: `https://openlibrary.org/books/${
-              book.cover_edition_key ? book.cover_edition_key : book.key
-            }`,
+            bookUrl: `https://openlibrary.org/books/${book.cover_edition_key ? book.cover_edition_key : book.key}`
           };
         });
         this.totalResults = response.numFound; // update totalResults property
@@ -121,8 +113,13 @@ export class HomeComponent implements OnInit {
         }
       });
   }
-
-  //clear all books when the query is cleared
+  
+  pageCount(): number {
+    const count = Math.ceil(this.totalResults / this.pageSize); // calculate number of pages
+    return count;
+  }
+  
+  //clear all books when the query is cleared  
   clearTable(): void {
     this.books = [];
     this.showNoResultsMessage = false;
@@ -130,5 +127,5 @@ export class HomeComponent implements OnInit {
   //clear searches on clicking button
   clearSearch(): void {
     this.bookSearch.setValue('');
-  }
+  } 
 }
