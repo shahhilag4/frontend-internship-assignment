@@ -42,6 +42,17 @@ export class HomeComponent implements OnInit {
 
   //Load functionalities on starting of the application -----> Debouncing functionality leveraged
   ngOnInit(): void {
+          this.onSearch(); // call search functionality to get accurate page count     
+  }
+  //reset paginator data on new query detection
+  resetPaginator(): void {
+    if (this.paginator) {
+      this.paginator.firstPage();
+      this.paginator.length = this.books.length;
+    }
+  }
+  //Search functionality
+  onSearch(): void {
     this.bookSearch.valueChanges.pipe(
       debounceTime(300),
       filter((value: string) => value.length > 0)
@@ -49,7 +60,7 @@ export class HomeComponent implements OnInit {
       if (this.loading) {
         return; // don't trigger search if already loading
       }
-      if (searchKey.trim().length < 3) {
+      if (searchKey.trim().length < 1) {
         this.clearTable();
         return;
       }
@@ -107,46 +118,6 @@ export class HomeComponent implements OnInit {
         this.clearTable();
       }
     });
-    
-  }
-  //reset paginator data on new query detection
-  resetPaginator(): void {
-    if (this.paginator) {
-      this.paginator.firstPage();
-      this.paginator.length = this.books.length;
-    }
-  }
-  //Search functionality
-  onSearch(): void {
-    const query: string = this.bookSearch.value;
-    if (query.trim().length < 3) {
-      this.clearTable();
-      return;
-    }
-    this.loading = true; // set loading to true
-    this.bookService.searchBooks(query, this.pageIndex, this.pageSize)
-      .subscribe((response: any) => {
-        this.loading = false; // set loading to false
-        this.books = response.docs.map((book: any) => {
-          return {
-            title: book.title,
-            authorName: book.author_name ? book.author_name.join(', ') : '',
-            year: book.first_publish_year || '',
-            isbn: book.isbn ? book.isbn[0] : '',
-            bookUrl: `https://openlibrary.org/books/${book.cover_edition_key ? book.cover_edition_key : book.key}`
-          };
-        });
-        // show "No results found" if search results are empty
-        if (this.books.length === 0) {
-          this.showNoResultsMessage = true;
-        } else {
-          this.showNoResultsMessage = false;
-        }
-        this.totalResults = response.numFound; // update totalResults property
-        console.log(this.totalResults);
-        this.pageCount(); // call pageCount to update paginator length
-        this.paginator.firstPage(); // reset paginator to first page
-      });
   }
   //Count the number of pages based on a formula
   pageCount(): number {
