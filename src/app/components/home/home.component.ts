@@ -132,6 +132,7 @@ export class HomeComponent implements OnInit {
       console.error(error);
     }
   }
+  
   //On clicking next or previous this function will be called
   async onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex + 1; // update pageIndex property
