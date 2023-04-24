@@ -18,10 +18,10 @@ export class HomeComponent implements OnInit {
   books: Array<any> = []; 
   showNoResultsMessage = false;
   loading = false;
+  
+  //Pagination variables
   pageIndex = 1;
   totalResults = 0;
-
-  //Pagination variables
   currentPage=1;
   pageSize =10;
   cachedBooks: { [key: string]: Array<any> } = {};
