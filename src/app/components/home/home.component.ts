@@ -66,11 +66,12 @@ export class HomeComponent implements OnInit {
       }
       this.loading = true; // set loading to true
       
-      //Caching
+      // Check if data is already cached in localStorage
       const cacheKey = searchKey.trim().toLowerCase(); // normalize cache key
-      if (this.cachedBooks[cacheKey]) { // check if data is already cached
+      const cachedData = localStorage.getItem(cacheKey);
+      if (cachedData) {
         this.loading = false; // set loading to false
-        this.books = this.cachedBooks[cacheKey]; // get data from cache
+        this.books = JSON.parse(cachedData); // get data from localStorage
         this.resetPaginator(); // reset the paginator to the first page after the search results are loaded
         // show "No results found" if search results are empty
         if (this.books.length === 0) {
@@ -80,7 +81,7 @@ export class HomeComponent implements OnInit {
         }
         return;
       }
-      //Fetching data from API
+      // Fetch data from API
       this.bookService.searchBooks(searchKey, this.currentPage, this.pageSize)
         .subscribe((data: any) => {
           this.loading = false; // set loading to false
@@ -99,8 +100,7 @@ export class HomeComponent implements OnInit {
           } else {
             this.showNoResultsMessage = false;
           }
-          if((<HTMLInputElement>document.getElementById("search")).value.length==0)
-          {
+          if ((<HTMLInputElement>document.getElementById("search")).value.length == 0) {
             this.clearTable();
           }
   
@@ -109,7 +109,8 @@ export class HomeComponent implements OnInit {
             this.paginator.firstPage();
             this.paginator.length = this.books.length;
           }
-          this.cachedBooks[cacheKey] = this.books; // add data to cache
+          // Add data to localStorage
+          localStorage.setItem(cacheKey, JSON.stringify(this.books));
         });
     });
   
@@ -119,6 +120,7 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+  
   //Count the number of pages based on a formula
   pageCount(): number {
     const count = Math.ceil(this.totalResults / this.pageSize); // calculate number of pages
