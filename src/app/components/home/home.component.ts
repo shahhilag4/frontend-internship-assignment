@@ -15,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
 export class HomeComponent implements OnInit {
   // Variable declaration
   bookSearch: FormControl;
-  books: Array<any> = [];
+  books: Array<any> = []; 
   showNoResultsMessage = false;
   loading = false;
   pageIndex = 1;
@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   constructor(private bookService: BookService,private http: HttpClient) {
     this.bookSearch = new FormControl('');
   }
+  
 
   trendingSubjects: Array<any> = [
     { name: 'JavaScript' },
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
     { name: 'Crypto' },
   ];
 
-  //Load functionalities on starting of the application
+  //Load functionalities on starting of the application -----> Debouncing functionality leveraged
   ngOnInit(): void {
     this.bookSearch.valueChanges.pipe(
       debounceTime(300),
