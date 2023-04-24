@@ -14,13 +14,7 @@ import { firstValueFrom } from 'rxjs';
 export class HomeComponent implements OnInit {
   // Variable declaration
   bookSearch: FormControl;
-  books: Array<{
-    title: string,
-    authorName: string,
-    year: string,
-    isbn: string,
-    bookUrl: string
-  }> = [];
+  books: Array<any> = [];
   showNoResultsMessage = false;
   loading = false;
 
@@ -69,17 +63,18 @@ export class HomeComponent implements OnInit {
 
   //Reset paginator data on new query detection
   resetPaginator(): void {
-    if (this.paginator) {
+    if (this.books && this.paginator) {
       this.paginator.firstPage();
       this.paginator.length = this.books.length;
     }
   }
+  
 
   //Search functionality
   async onSearch(): Promise<void> {
     const query: string = this.bookSearch.value;
     //if value of query less than 2 or strictly equal to 0 then clear search table
-    if (query.trim().length < 2 || query.trim().length === 0) {
+    if (!query || query.trim().length < 2 || query.trim().length === 0) {
       this.clearTable();
       return;
     }
@@ -163,7 +158,10 @@ export class HomeComponent implements OnInit {
   }
 
   //Count the number of pages based on a formula
-  pageCount = (): number => Math.ceil(this.totalResults / this.pageSize);
+  pageCount(): number {
+    const count = Math.ceil(this.totalResults / this.pageSize); // calculate number of pages
+    return count;
+  }
 
   //clear all books when the query is cleared
   clearTable(): void {
