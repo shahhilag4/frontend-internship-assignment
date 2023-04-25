@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
       return;
     }
     this.loading = true; // else set loading to true
-
+  
     // Check if result is already cached in localStorage
     const cachedData = localStorage.getItem(query);
     if (cachedData) {
@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
       this.paginator.firstPage(); // reset paginator to first page
       return;
     }
-
+  
     try {
       const response = await firstValueFrom(this.bookService.searchBooks(query, this.pageIndex, this.pageSize)); // change the pageIndex and pageSize to 1 and 10 respectively
       this.loading = false; // set loading to false
@@ -102,14 +102,13 @@ export class HomeComponent implements OnInit {
           authorName: book.author_name ? book.author_name.join(', ') : '',
           year: book.first_publish_year || '',
           isbn: book.isbn ? book.isbn[0] : '',
-          bookUrl: `https://openlibrary.org/books/${book.cover_edition_key ? book.cover_edition_key : book.key
-            }`,
+          bookUrl: `https://openlibrary.org/books/${book.cover_edition_key ? book.cover_edition_key : book.key}`,
         };
       });
-
+  
       // show "No results found" if search results are empty
       this.showNoResultsMessage = this.books.length === 0;
-
+  
       // update cache in localStorage
       localStorage.setItem(
         query,
@@ -118,7 +117,7 @@ export class HomeComponent implements OnInit {
           totalResults: response.numFound,
         })
       );
-
+  
       this.totalResults = response.numFound; // update totalResults property
       console.log(this.totalResults);
       this.pageCount(); // call pageCount to update paginator length
@@ -128,34 +127,56 @@ export class HomeComponent implements OnInit {
     }
   }
   
+  
   //On clicking next or previous this function will be called
   async onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex + 1; // update pageIndex property
     this.pageSize = event.pageSize; // update pageSize property
     const query: string = this.bookSearch.value;
+  
+    // Check if result is already cached in localStorage
+    const cachedData = localStorage.getItem(`${query}_page${this.pageIndex}_pageSize${this.pageSize}`);
+    if (cachedData) {
+      const { books, totalResults } = JSON.parse(cachedData);
+      this.loading = false; // set loading to false
+      this.books = books;
+      this.totalResults = totalResults; // update totalResults property
+      this.showNoResultsMessage = this.books.length === 0; // show "No results found" if search results are empty
+      return;
+    }
+  
     try {
-      const response = await firstValueFrom(this.bookService.searchBooks(query, this.pageIndex, this.pageSize)); // change the pageIndex and pageSize to 1 and 10 respectively
-      this.loading = false;
+      const response = await firstValueFrom(this.bookService.searchBooks(query, this.pageIndex, this.pageSize));
+      this.loading = false; // set loading to false
       this.books = response.docs.map((book: any) => {
         return {
           title: book.title,
           authorName: book.author_name ? book.author_name.join(', ') : '',
           year: book.first_publish_year || '',
           isbn: book.isbn ? book.isbn[0] : '',
-          bookUrl: `https://openlibrary.org/books/${book.cover_edition_key ? book.cover_edition_key : book.key
-            }`,
+          bookUrl: `https://openlibrary.org/books/${book.cover_edition_key ? book.cover_edition_key : book.key}`,
         };
       });
+  
+      // show "No results found" if search results are empty
+      this.showNoResultsMessage = this.books.length === 0;
+  
+      // update cache in localStorage
+      localStorage.setItem(
+        `${query}_page${this.pageIndex}_pageSize${this.pageSize}`,
+        JSON.stringify({
+          books: this.books,
+          totalResults: response.numFound,
+        })
+      );
+  
       this.totalResults = response.numFound; // update totalResults property
-      if (this.books.length === 0) {
-        this.showNoResultsMessage = true;
-      } else {
-        this.showNoResultsMessage = false;
-      }
+      console.log(this.totalResults);
     } catch (error) {
       console.error(error);
     }
   }
+  
 
   //Count the number of pages based on a formula
   pageCount(): number {
